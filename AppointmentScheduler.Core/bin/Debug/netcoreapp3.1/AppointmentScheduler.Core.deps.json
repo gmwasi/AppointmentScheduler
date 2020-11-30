@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "AppointmentScheduler.Core/1.0.0": {
+        "runtime": {
+          "AppointmentScheduler.Core.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AppointmentScheduler.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

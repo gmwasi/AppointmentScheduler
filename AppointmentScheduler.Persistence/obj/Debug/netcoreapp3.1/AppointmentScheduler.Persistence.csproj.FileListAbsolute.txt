@@ -1,0 +1,15 @@
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Persistence\bin\Debug\netcoreapp3.1\AppointmentScheduler.Persistence.deps.json
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Persistence\bin\Debug\netcoreapp3.1\AppointmentScheduler.Persistence.dll
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Persistence\obj\Debug\netcoreapp3.1\AppointmentScheduler.Persistence.csprojAssemblyReference.cache
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Persistence\obj\Debug\netcoreapp3.1\AppointmentScheduler.Persistence.AssemblyInfoInputs.cache
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Persistence\obj\Debug\netcoreapp3.1\AppointmentScheduler.Persistence.AssemblyInfo.cs
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Persistence\bin\Debug\netcoreapp3.1\AppointmentScheduler.Persistence.pdb
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Persistence\bin\Debug\netcoreapp3.1\AppointmentScheduler.Core.dll
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Persistence\bin\Debug\netcoreapp3.1\AppointmentScheduler.Core.pdb
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Persistence\obj\Debug\netcoreapp3.1\AppointmentScheduler.Persistence.csproj.CopyComplete
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Persistence\obj\Debug\netcoreapp3.1\AppointmentScheduler.Persistence.dll
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Persistence\obj\Debug\netcoreapp3.1\AppointmentScheduler.Persistence.pdb
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Persistence\bin\Debug\netcoreapp3.1\AppointmentScheduler.Persistence.runtimeconfig.json
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Persistence\bin\Debug\netcoreapp3.1\AppointmentScheduler.Persistence.runtimeconfig.dev.json
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Persistence\obj\Debug\netcoreapp3.1\AppointmentScheduler.Persistence.genruntimeconfig.cache
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Persistence\obj\Debug\netcoreapp3.1\AppointmentScheduler.Persistence.csproj.CoreCompileInputs.cache

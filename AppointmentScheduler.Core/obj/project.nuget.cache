@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "vmezcRJvFhWeRVK/Iwj92xAJsMTinNcVFqTEUpgotHbo1XrP25hVK6tVj4SUP+Cn9fuQ08jwNyof0sgj1SkN/g==",
+  "success": true,
+  "projectFilePath": "C:\\Mwasi\\Projects\\Path\\AppointmentScheduler\\AppointmentScheduler.Core\\AppointmentScheduler.Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Brian Mwasi\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
+  ],
+  "logs": []
+}

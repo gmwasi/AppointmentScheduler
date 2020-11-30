@@ -1,0 +1,8 @@
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Core\bin\Debug\netcoreapp3.1\AppointmentScheduler.Core.deps.json
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Core\bin\Debug\netcoreapp3.1\AppointmentScheduler.Core.dll
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Core\bin\Debug\netcoreapp3.1\AppointmentScheduler.Core.pdb
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Core\obj\Debug\netcoreapp3.1\AppointmentScheduler.Core.AssemblyInfoInputs.cache
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Core\obj\Debug\netcoreapp3.1\AppointmentScheduler.Core.AssemblyInfo.cs
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Core\obj\Debug\netcoreapp3.1\AppointmentScheduler.Core.csproj.CoreCompileInputs.cache
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Core\obj\Debug\netcoreapp3.1\AppointmentScheduler.Core.dll
+C:\Mwasi\Projects\AppointmentScheduler\AppointmentScheduler.Core\obj\Debug\netcoreapp3.1\AppointmentScheduler.Core.pdb
