@@ -10,6 +10,7 @@ namespace AppointmentScheduler.Core.Entity
         public string Email { get; set; }
         public int RoleId { get; set; }
         public string Password { get; set; }
+        public int PersonId { get; set; }
         public virtual Person Person { get; set; }
     }
 }

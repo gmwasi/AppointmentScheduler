@@ -1,4 +1,5 @@
-﻿using AppointmentScheduler.Core.Entity;
+﻿using System;
+using AppointmentScheduler.Core.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppointmentScheduler.Persistence.Seed
@@ -27,6 +28,7 @@ namespace AppointmentScheduler.Persistence.Seed
                 new Lookup { Id = 17, Name = "Uncle", LookupType = LookupType.Relationship },
                 new Lookup { Id = 18, Name = "Cousin", LookupType = LookupType.Relationship },
                 new Lookup { Id = 19, Name = "In-law", LookupType = LookupType.Relationship },
+                new Lookup { Id = 20, Name = "CHV", LookupType = LookupType.Relationship },
                 new Lookup { Id = 24, Name = "Nairobi", LookupType = LookupType.County },
                 new Lookup { Id = 25, Name = "Kilifi", LookupType = LookupType.County },
                 new Lookup { Id = 26, Name = "Nyamira", LookupType = LookupType.County },
@@ -115,6 +117,23 @@ namespace AppointmentScheduler.Persistence.Seed
             new ImmunizationPeriod { Id = 14, Duration = 6, Period = Period.Weeks, ImmunizationId = 8 },
             new ImmunizationPeriod { Id = 15, Duration = 10, Period = Period.Weeks, ImmunizationId = 8 },
             new ImmunizationPeriod { Id = 16, Duration = 14, Period = Period.Weeks, ImmunizationId = 8 }
+
+            );
+
+            modelBuilder.Entity<Facility>().HasData(
+                new Facility() { Id = 1,Name = "Kenyatta", MflCode = "MFL-001", CountyId = 24, PostalAddress = "PO Box 123-00100", FacilityLevelId = 28, Location = "Nairobi", Latitude = 0, Longitude = 0}
+            );
+
+            modelBuilder.Entity<Person>().HasData(
+                new Person() { Id = 1, FirstName = "User", MiddleName = "1", LastName = "Doe", DateOfBirth = DateTime.Today.AddYears(-25), FacilityId = 1, GenderId = 1, MaritalStatusId = 3 },
+                new Person() { Id = 2, FirstName = "User", MiddleName = "2", LastName = "Jil", DateOfBirth = DateTime.Today.AddYears(-30), FacilityId = 1, GenderId = 2, MaritalStatusId = 3 },
+                new Person() { Id = 3, FirstName = "User", MiddleName = "3", LastName = "Don", DateOfBirth = DateTime.Today.AddYears(-40), FacilityId = 1, GenderId = 1, MaritalStatusId = 4 }
+            );
+
+            modelBuilder.Entity<User>().HasData(
+                new User() { Id = 1, Email = "doe@app.com", PersonId = 1, Password = "secret", UserName = "doe", RoleId = 8 },
+                new User() { Id = 2, Email = "jil@app.com", PersonId = 2, Password = "secret", UserName = "jil", RoleId = 9 },
+                new User() { Id = 3, Email = "don@app.com", PersonId = 3, Password = "secret", UserName = "don", RoleId = 10 }
 
             );
         }

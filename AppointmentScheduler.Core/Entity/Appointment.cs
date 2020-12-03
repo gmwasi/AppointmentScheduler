@@ -10,10 +10,8 @@ namespace AppointmentScheduler.Core.Entity
         public int AppointmentStatus { get; set; } = 31;
         public Immunization Immunization { get; set; }
         public int ImmunizationId { get; set; }
-        public Person Child { get; set; }
+        public Child Child { get; set; }
         public int ChildId { get; set; }
-        public Person CareGiver { get; set; }
-        public int CareGiverId { get; set; }
 
     }
 }

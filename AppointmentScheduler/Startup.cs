@@ -49,10 +49,16 @@ namespace AppointmentScheduler
             services.AddScoped<ILookupRepository, LookupRepository>();
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IChildRepository, ChildRepository>();
             services.AddScoped<IAppointmentService, AppointmentService>();
+            services.AddScoped<IChildService, ChildService>();
             services.AddControllers();
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

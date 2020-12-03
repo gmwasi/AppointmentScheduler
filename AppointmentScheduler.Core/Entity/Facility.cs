@@ -11,7 +11,6 @@ namespace AppointmentScheduler.Core.Entity
         public string Location { get; set; }
         public string PostalAddress { get; set; }
         public int CountyId { get; set; }
-        public int MaritalStatusId { get; set; }
         public int FacilityLevelId { get; set; }
         public int Latitude { get; set; }
         public int Longitude { get; set; }

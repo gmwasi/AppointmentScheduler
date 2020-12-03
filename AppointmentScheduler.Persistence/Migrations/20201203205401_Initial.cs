@@ -18,7 +18,6 @@ namespace AppointmentScheduler.Persistence.Migrations
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PostalAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CountyId = table.Column<int>(type: "int", nullable: false),
-                    MaritalStatusId = table.Column<int>(type: "int", nullable: false),
                     FacilityLevelId = table.Column<int>(type: "int", nullable: false),
                     Latitude = table.Column<int>(type: "int", nullable: false),
                     Longitude = table.Column<int>(type: "int", nullable: false)
@@ -100,38 +99,28 @@ namespace AppointmentScheduler.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Appointments",
+                name: "Children",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AppointmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AppointmentStatus = table.Column<int>(type: "int", nullable: false),
-                    ImmunizationId = table.Column<int>(type: "int", nullable: true),
-                    ChildId = table.Column<int>(type: "int", nullable: true),
-                    CareGiverId = table.Column<int>(type: "int", nullable: true)
+                    UniqueNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PersonId = table.Column<int>(type: "int", nullable: false),
+                    CareGiverId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Appointments", x => x.Id);
+                    table.PrimaryKey("PK_Children", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Appointments_Immunizations_ImmunizationId",
-                        column: x => x.ImmunizationId,
-                        principalTable: "Immunizations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Appointments_Persons_CareGiverId",
+                        name: "FK_Children_Persons_CareGiverId",
                         column: x => x.CareGiverId,
                         principalTable: "Persons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Appointments_Persons_ChildId",
-                        column: x => x.ChildId,
+                        name: "FK_Children_Persons_PersonId",
+                        column: x => x.PersonId,
                         principalTable: "Persons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -141,11 +130,12 @@ namespace AppointmentScheduler.Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AlternateNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PostalAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhysicalAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CountyId = table.Column<int>(type: "int", nullable: false),
-                    PersonId = table.Column<int>(type: "int", nullable: true)
+                    PersonId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -155,7 +145,7 @@ namespace AppointmentScheduler.Persistence.Migrations
                         column: x => x.PersonId,
                         principalTable: "Persons",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -193,7 +183,7 @@ namespace AppointmentScheduler.Persistence.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RoleId = table.Column<int>(type: "int", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PersonId = table.Column<int>(type: "int", nullable: true)
+                    PersonId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -203,13 +193,37 @@ namespace AppointmentScheduler.Persistence.Migrations
                         column: x => x.PersonId,
                         principalTable: "Persons",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Appointments_CareGiverId",
-                table: "Appointments",
-                column: "CareGiverId");
+            migrationBuilder.CreateTable(
+                name: "Appointments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AppointmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AppointmentStatus = table.Column<int>(type: "int", nullable: false),
+                    ImmunizationId = table.Column<int>(type: "int", nullable: false),
+                    ChildId = table.Column<int>(type: "int", nullable: false),
+                    CareGiverId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Appointments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Children_ChildId",
+                        column: x => x.ChildId,
+                        principalTable: "Children",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Immunizations_ImmunizationId",
+                        column: x => x.ImmunizationId,
+                        principalTable: "Immunizations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_ChildId",
@@ -220,6 +234,18 @@ namespace AppointmentScheduler.Persistence.Migrations
                 name: "IX_Appointments_ImmunizationId",
                 table: "Appointments",
                 column: "ImmunizationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Children_CareGiverId",
+                table: "Children",
+                column: "CareGiverId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Children_PersonId",
+                table: "Children",
+                column: "PersonId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ImmunizationPeriods_ImmunizationId",
@@ -264,6 +290,9 @@ namespace AppointmentScheduler.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Children");
 
             migrationBuilder.DropTable(
                 name: "Immunizations");

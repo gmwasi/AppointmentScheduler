@@ -32,13 +32,13 @@ namespace AppointmentScheduler.Controllers
         [HttpGet]
         public IEnumerable<Appointment> Get()
         {
-            return _appointmentRepository.GetAll();
+            return _appointmentRepository.GetAllFull();
         }
 
         [HttpGet("{id}")]
         public Appointment GetById(int id)
         {
-            return _appointmentRepository.GetById(id);
+            return _appointmentRepository.GetByIdFull(id);
         }
 
         [HttpGet("{month}")]

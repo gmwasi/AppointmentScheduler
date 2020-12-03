@@ -9,10 +9,25 @@ namespace AppointmentScheduler.Persistence.Repository
 {
     public class AppointmentRepository : Repository<Appointment>, IAppointmentRepository
     {
-        private DbSet<Appointment> _entities;
+        private readonly IQueryable<Appointment> _entities;
         public AppointmentRepository(AppointmentsContext context) : base(context)
         {
             _entities = context.Set<Appointment>();
+            _entities = context.Appointments
+                .Include(i => i.Immunization)
+                .Include(i => i.Child)
+                .Include(i => i.Child.Person)
+                .AsNoTracking();
+        }
+
+        public Appointment GetByIdFull(int id)
+        {
+            return _entities.SingleOrDefault(e => e.Id == id);
+        }
+
+        public IEnumerable<Appointment> GetAllFull()
+        {
+            return _entities;
         }
 
         public IEnumerable<Appointment> GetByMonth(int month)
@@ -20,5 +35,6 @@ namespace AppointmentScheduler.Persistence.Repository
             var appointments = _entities.Where(e => e.AppointmentDate.Month == month).AsEnumerable();
             return appointments;
         }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using AppointmentScheduler.Core.Entity;
+﻿using System.Collections.Generic;
+using AppointmentScheduler.Core.Entity;
 
 namespace AppointmentScheduler.Core.Interface
 {

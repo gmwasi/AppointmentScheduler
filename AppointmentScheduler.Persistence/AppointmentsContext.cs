@@ -21,6 +21,7 @@ namespace AppointmentScheduler.Persistence
         public DbSet<Immunization> Immunizations { get; set; }
         public DbSet<ImmunizationPeriod> ImmunizationPeriods { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Child> Children { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -41,6 +42,10 @@ namespace AppointmentScheduler.Persistence
 
             modelBuilder.Entity<Appointment>()
                 .HasOne(c => c.Immunization);
+            modelBuilder.Entity<Child>()
+                .HasOne(c => c.Person).WithOne().OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Child>()
+                .HasOne(c => c.CareGiver).WithOne().OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Seed();
         }

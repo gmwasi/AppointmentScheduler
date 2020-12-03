@@ -1,4 +1,6 @@
-﻿using AppointmentScheduler.Core.Entity;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AppointmentScheduler.Core.Entity;
 using AppointmentScheduler.Core.Interface;
 using Microsoft.EntityFrameworkCore;
 

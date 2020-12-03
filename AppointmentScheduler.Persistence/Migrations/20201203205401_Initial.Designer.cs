@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AppointmentScheduler.Persistence.Migrations
 {
     [DbContext(typeof(AppointmentsContext))]
-    [Migration("20201129223052_Initial")]
+    [Migration("20201203205401_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,24 +34,49 @@ namespace AppointmentScheduler.Persistence.Migrations
                     b.Property<int>("AppointmentStatus")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CareGiverId")
+                    b.Property<int>("CareGiverId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ChildId")
+                    b.Property<int>("ChildId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ImmunizationId")
+                    b.Property<int>("ImmunizationId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CareGiverId");
 
                     b.HasIndex("ChildId");
 
                     b.HasIndex("ImmunizationId");
 
                     b.ToTable("Appointments");
+                });
+
+            modelBuilder.Entity("AppointmentScheduler.Core.Entity.Child", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("CareGiverId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PersonId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UniqueNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CareGiverId")
+                        .IsUnique();
+
+                    b.HasIndex("PersonId")
+                        .IsUnique();
+
+                    b.ToTable("Children");
                 });
 
             modelBuilder.Entity("AppointmentScheduler.Core.Entity.Facility", b =>
@@ -74,9 +99,6 @@ namespace AppointmentScheduler.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Longitude")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MaritalStatusId")
                         .HasColumnType("int");
 
                     b.Property<string>("MflCode")
@@ -207,7 +229,10 @@ namespace AppointmentScheduler.Persistence.Migrations
                     b.Property<int>("CountyId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PersonId")
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PersonId")
                         .HasColumnType("int");
 
                     b.Property<string>("PhoneNumber")
@@ -274,7 +299,7 @@ namespace AppointmentScheduler.Persistence.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PersonId")
+                    b.Property<int>("PersonId")
                         .HasColumnType("int");
 
                     b.Property<int>("RoleId")
@@ -292,23 +317,40 @@ namespace AppointmentScheduler.Persistence.Migrations
 
             modelBuilder.Entity("AppointmentScheduler.Core.Entity.Appointment", b =>
                 {
-                    b.HasOne("AppointmentScheduler.Core.Entity.Person", "CareGiver")
+                    b.HasOne("AppointmentScheduler.Core.Entity.Child", "Child")
                         .WithMany()
-                        .HasForeignKey("CareGiverId");
-
-                    b.HasOne("AppointmentScheduler.Core.Entity.Person", "Child")
-                        .WithMany()
-                        .HasForeignKey("ChildId");
+                        .HasForeignKey("ChildId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AppointmentScheduler.Core.Entity.Immunization", "Immunization")
                         .WithMany()
-                        .HasForeignKey("ImmunizationId");
-
-                    b.Navigation("CareGiver");
+                        .HasForeignKey("ImmunizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Child");
 
                     b.Navigation("Immunization");
+                });
+
+            modelBuilder.Entity("AppointmentScheduler.Core.Entity.Child", b =>
+                {
+                    b.HasOne("AppointmentScheduler.Core.Entity.Person", "CareGiver")
+                        .WithOne()
+                        .HasForeignKey("AppointmentScheduler.Core.Entity.Child", "CareGiverId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("AppointmentScheduler.Core.Entity.Person", "Person")
+                        .WithOne()
+                        .HasForeignKey("AppointmentScheduler.Core.Entity.Child", "PersonId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CareGiver");
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("AppointmentScheduler.Core.Entity.ImmunizationPeriod", b =>
@@ -326,7 +368,9 @@ namespace AppointmentScheduler.Persistence.Migrations
                 {
                     b.HasOne("AppointmentScheduler.Core.Entity.Person", "Person")
                         .WithMany("PersonContacts")
-                        .HasForeignKey("PersonId");
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Person");
                 });
@@ -344,7 +388,9 @@ namespace AppointmentScheduler.Persistence.Migrations
                 {
                     b.HasOne("AppointmentScheduler.Core.Entity.Person", "Person")
                         .WithMany()
-                        .HasForeignKey("PersonId");
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Person");
                 });
