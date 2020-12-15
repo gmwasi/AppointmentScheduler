@@ -1,59 +1,128 @@
-import { connect } from "react-redux";
-import React, { useEffect } from "react";
-import Page from 'components/Page';
+import axios from "axios";
+import { url } from "../api";
+import { connect } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import {
-    Card,
-    CardBody,
-    CardHeader,
-    Col,
-    Row,
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  Form,
+  FormGroup,
+  Input,
+  Label,
+  Row,
 } from 'reactstrap';
-import { getAppointmentSchedule } from "../actions/appointments";
+import Page from 'components/Page';
+import { getAppointmentSchedule } from '../actions/appointments';
+import useForm from "../functions/UseForm";
 import moment from 'moment';
 
-const AppointmentsPage = (props) => {
+const AppointmentsPage = props => {
 
-    useEffect(() => {
+  const { values, handleInputChange, resetForm } = useForm(
+    {}
+  );
 
-        let dateOfBirth = moment(new Date()).format("YYYY-MM-DD");
-        if (props.child.person && props.child.person.dateOfBirth) {
-            dateOfBirth = props.child.person.dateOfBirth
-        }
-        console.log(dateOfBirth)
-        props.fetchAppointments(dateOfBirth);
-    }, []);
+  const [loading, setLoading] = useState(true);
+  const [appointmentSchedule, setAppointmentSchedule] = useState([]);
 
-    return (
-        <Page
-            className="DashboardPage"
-            title="Schedule Appointments"
-            breadcrumbs={[{ name: 'Appointments', active: true }]}
-        >
-            <Row>
-                <Col lg="12" md="12" sm="12" xs="12">
-                    <Card>
-                        <CardHeader>
-                            Appointments Schedule
-                        </CardHeader>
-                        <CardBody>
+  useEffect(() => {
+    let dateOfBirth = moment(new Date()).format('YYYY-MM-DD');
+    if (props.child.person && props.child.person.dateOfBirth) {
+      dateOfBirth = props.child.person.dateOfBirth;
+    }
+    axios
+      .get(`${url}appointments/schedule/${dateOfBirth}`)
+      .then((response) => {
+        setAppointmentSchedule(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+      props.fetchAppointments(dateOfBirth);
+  }, []);
 
-                        </CardBody>
-                    </Card>
-                </Col>
+  const handleSubmit = event => {
+    console.log(values);
+    event.preventDefault();
+  };
+
+  return (
+    <Page
+      className="DashboardPage"
+      title="Schedule Appointments"
+      breadcrumbs={[{ name: 'Appointments', active: true }]}
+    >
+      <Form onSubmit={handleSubmit}>
+        <Row>
+          <Col lg="12" md="12" sm="12" xs="12">
+            <Card>
+              <CardHeader>Appointments Schedule</CardHeader>
+              <CardBody>
+                {!loading && (
+                  <FormGroup>
+                    {appointmentSchedule.map(({ appointmentDate, immunizationId, immunizationName }) => (
+                      <Row>
+                        <Col md={4}>
+                          <Label for={`appointment-${immunizationId}`}>{immunizationName}</Label>
+                        </Col>
+                        <Col md={4}>
+                          <Input
+                            type="date"
+                            name={`appointment-${immunizationId}`}
+                            value={moment(appointmentDate).format('YYYY-MM-DD')}
+                            onChange={handleInputChange}
+                          />
+                        </Col>
+                        <Col md={4}>
+
+                        </Col>
+                      </Row>
+                    ))}
+                  </FormGroup>
+                )}
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col xl={12} lg={12} md={12}>
+            <Row form>
+              <Col md={6}>
+                <FormGroup check row>
+                  <Col lg={{ size: 30, offset: 2 }}>
+                    <Button onClick={resetForm}>Cancel</Button>
+                  </Col>
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup check row>
+                  <Col lg={{ size: 30, offset: 2 }}>
+                    <Button>Submit</Button>
+                  </Col>
+                </FormGroup>
+              </Col>
             </Row>
-        </Page>
-    );
-}
+          </Col>
+        </Row>
+      </Form>
+    </Page >
 
-const mapStateToProps = (state) => {
-    return {
-        appointments: state.appointments.schedule,
-        child: state.children.child,
-    };
+  );
+};
+
+const mapStateToProps = state => {
+  return {
+    appointments: state.appointments.schedule,
+    child: state.children.child,
+  };
 };
 
 const mapActionToProps = {
-    fetchAppointments: getAppointmentSchedule,
+  fetchAppointments: getAppointmentSchedule,
 };
 
 export default connect(mapStateToProps, mapActionToProps)(AppointmentsPage);

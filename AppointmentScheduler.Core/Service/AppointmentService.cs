@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AppointmentScheduler.Core.Entity;
 using AppointmentScheduler.Core.Interface;
@@ -35,8 +36,9 @@ namespace AppointmentScheduler.Core.Service
                 appointmentViews.Add(appointmentView);
 
             }
-            
-            return appointmentViews;
+
+            var result = appointmentViews.OrderBy(x => x.AppointmentDate);
+            return result;
         }
 
         public async Task<bool> SaveAppointments(List<Appointment> appointments)

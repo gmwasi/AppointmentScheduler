@@ -38,6 +38,11 @@ export const getAppointmentSchedule = (dob, onSuccess, onError) => (
         onSuccess();
       }
     })
+    .then(() => {
+      if (onSuccess) {
+        onSuccess();
+      }
+    })
     .catch((error) => {
       if (onError) {
         onError();
@@ -79,7 +84,7 @@ export const updateAppointmentDate = (id, date, onSuccess, onError) => (
   dispatch,
 ) => {
   axios
-  .put(`${url}appointments/date/${id}/${date}`)
+    .put(`${url}appointments/date/${id}/${date}`)
     .then((response) => {
       dispatch({
         type: ACTION_TYPES.APPOINTMENTS_UPDATE_DATE,
@@ -102,7 +107,7 @@ export const updateAppointmentStatus = (id, status, onSuccess, onError) => (
   dispatch,
 ) => {
   axios
-  .put(`${url}appointments/date/${id}/${status}`)
+    .put(`${url}appointments/date/${id}/${status}`)
     .then((response) => {
       dispatch({
         type: ACTION_TYPES.APPOINTMENTS_UPDATE_STATUS,
