@@ -30,13 +30,13 @@ namespace AppointmentScheduler.Controllers
         [HttpGet]
         public IEnumerable<Child> Get()
         {
-            return _childRepository.GetAllFlattened();
+            return _childRepository.GetAllFull();
         }
 
         [HttpGet("{id}")]
         public Child GetById(int id)
         {
-            return _childRepository.GetAllFlattenedById(id);
+            return _childRepository.GetAllFullById(id);
         }
 
         [HttpGet("FIND")]
@@ -50,8 +50,8 @@ namespace AppointmentScheduler.Controllers
         {
             try
             {
-                await _childService.Register(registration);
-                return Created(new Uri(Request.GetDisplayUrl()), registration);
+                var result = await _childService.Register(registration);
+                return Created(new Uri(Request.GetDisplayUrl()), result);
             }
             catch (Exception e)
             {

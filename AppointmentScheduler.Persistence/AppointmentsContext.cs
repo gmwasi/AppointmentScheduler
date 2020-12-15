@@ -1,11 +1,12 @@
 ﻿using System;
 using AppointmentScheduler.Core.Entity;
 using AppointmentScheduler.Persistence.Seed;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppointmentScheduler.Persistence
 {
-    public class AppointmentsContext : DbContext
+    public class AppointmentsContext : IdentityDbContext<User> 
     {
         public AppointmentsContext(DbContextOptions<AppointmentsContext> options) : base(options)
         {
@@ -16,7 +17,6 @@ namespace AppointmentScheduler.Persistence
         public DbSet<PersonContact> PersonContacts { get; set; }
         public DbSet<PersonRelative> PersonRelatives { get; set; }
         public DbSet<Lookup> Lookups { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Facility> Facilities { get; set; }
         public DbSet<Immunization> Immunizations { get; set; }
         public DbSet<ImmunizationPeriod> ImmunizationPeriods { get; set; }
@@ -25,6 +25,7 @@ namespace AppointmentScheduler.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Person>()
                 .HasMany(c => c.PersonContacts)
                 .WithOne(e => e.Person);
@@ -47,7 +48,7 @@ namespace AppointmentScheduler.Persistence
             modelBuilder.Entity<Child>()
                 .HasOne(c => c.CareGiver).WithOne().OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Seed();
+                modelBuilder.Seed();
         }
     }
 }

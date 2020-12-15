@@ -6,7 +6,7 @@ namespace AppointmentScheduler.Core.Interface
     {
         IEnumerable<T> GetAll();
         T GetById(int id);
-        void Insert(T entity);
+        T Insert(T entity);
         void Update(T entity);
         void Delete(int id);
     }

@@ -11,7 +11,7 @@ C:\Mwasi\Projects\Path\AppointmentScheduler\AppointmentScheduler.Core\bin\Debug\
 C:\Mwasi\Projects\Path\AppointmentScheduler\AppointmentScheduler.Core\bin\Debug\netcoreapp3.1\AppointmentScheduler.Core.pdb
 C:\Mwasi\Projects\Path\AppointmentScheduler\AppointmentScheduler.Core\obj\Debug\netcoreapp3.1\AppointmentScheduler.Core.AssemblyInfoInputs.cache
 C:\Mwasi\Projects\Path\AppointmentScheduler\AppointmentScheduler.Core\obj\Debug\netcoreapp3.1\AppointmentScheduler.Core.AssemblyInfo.cs
-C:\Mwasi\Projects\Path\AppointmentScheduler\AppointmentScheduler.Core\obj\Debug\netcoreapp3.1\AppointmentScheduler.Core.csproj.CoreCompileInputs.cache
 C:\Mwasi\Projects\Path\AppointmentScheduler\AppointmentScheduler.Core\obj\Debug\netcoreapp3.1\AppointmentScheduler.Core.dll
 C:\Mwasi\Projects\Path\AppointmentScheduler\AppointmentScheduler.Core\obj\Debug\netcoreapp3.1\AppointmentScheduler.Core.pdb
 C:\Mwasi\Projects\Path\AppointmentScheduler\AppointmentScheduler.Core\obj\Debug\netcoreapp3.1\AppointmentScheduler.Core.csprojAssemblyReference.cache
+C:\Mwasi\Projects\Path\AppointmentScheduler\AppointmentScheduler.Core\obj\Debug\netcoreapp3.1\AppointmentScheduler.Core.csproj.CoreCompileInputs.cache

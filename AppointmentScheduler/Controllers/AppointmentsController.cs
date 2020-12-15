@@ -68,5 +68,35 @@ namespace AppointmentScheduler.Controllers
 
             }
         }
+
+        [HttpPut("STATUS/{appointmentId}/{status}")]
+        public async Task<IActionResult> UpdateAppointmentStatus(int appointmentId, int status)
+        {
+            try
+            {
+                await _appointmentService.UpdateStatus(appointmentId, status);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+
+            }
+        }
+
+        [HttpPut("DATE/{appointmentId}/{date}")]
+        public async Task<IActionResult> UpdateAppointmentDate(int appointmentId, DateTime date)
+        {
+            try
+            {
+                await _appointmentService.UpdateAppointmentDate(appointmentId, date);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+
+            }
+        }
     }
 }

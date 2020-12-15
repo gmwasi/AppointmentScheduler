@@ -56,6 +56,38 @@ namespace AppointmentScheduler.Core.Service
             }
         }
 
+        public async Task<bool> UpdateStatus(int appointmentId, int status)
+        {
+            try
+            {
+                var appointment = _appointmentRepository.GetById(appointmentId);
+                appointment.AppointmentStatus = status;
+                await Task.Run(() => _appointmentRepository.Update(appointment));
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<bool> UpdateAppointmentDate(int appointmentId, DateTime date)
+        {
+            try
+            {
+                var appointment = _appointmentRepository.GetById(appointmentId);
+                appointment.AppointmentDate = date;
+                await Task.Run(() => _appointmentRepository.Update(appointment));
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
         private DateTime CalculateDate(DateTime dob, Period period, int duration)
         {
             var appointmentDate = dob;

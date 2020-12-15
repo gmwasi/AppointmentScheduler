@@ -125,17 +125,17 @@ namespace AppointmentScheduler.Persistence.Seed
             );
 
             modelBuilder.Entity<Person>().HasData(
-                new Person() { Id = 1, FirstName = "User", MiddleName = "1", LastName = "Doe", DateOfBirth = DateTime.Today.AddYears(-25), FacilityId = 1, GenderId = 1, MaritalStatusId = 3 },
-                new Person() { Id = 2, FirstName = "User", MiddleName = "2", LastName = "Jil", DateOfBirth = DateTime.Today.AddYears(-30), FacilityId = 1, GenderId = 2, MaritalStatusId = 3 },
-                new Person() { Id = 3, FirstName = "User", MiddleName = "3", LastName = "Don", DateOfBirth = DateTime.Today.AddYears(-40), FacilityId = 1, GenderId = 1, MaritalStatusId = 4 }
+                new Person() { Id = 1, HudumaNamba = "12345671",FirstName = "User", MiddleName = "1", LastName = "Doe", DateOfBirth = DateTime.Today.AddYears(-25), FacilityId = 1, GenderId = 1, MaritalStatusId = 3 },
+                new Person() { Id = 2, HudumaNamba = "12345672", FirstName = "User", MiddleName = "2", LastName = "Jil", DateOfBirth = DateTime.Today.AddYears(-30), FacilityId = 1, GenderId = 2, MaritalStatusId = 3 },
+                new Person() { Id = 3, HudumaNamba = "12345673", FirstName = "User", MiddleName = "3", LastName = "Don", DateOfBirth = DateTime.Today.AddYears(-40), FacilityId = 1, GenderId = 1, MaritalStatusId = 4 }
             );
 
-            modelBuilder.Entity<User>().HasData(
+            /*modelBuilder.Entity<User>().HasData(
                 new User() { Id = 1, Email = "doe@app.com", PersonId = 1, Password = "secret", UserName = "doe", RoleId = 8 },
                 new User() { Id = 2, Email = "jil@app.com", PersonId = 2, Password = "secret", UserName = "jil", RoleId = 9 },
                 new User() { Id = 3, Email = "don@app.com", PersonId = 3, Password = "secret", UserName = "don", RoleId = 10 }
 
-            );
+            );*/
         }
     }
 }

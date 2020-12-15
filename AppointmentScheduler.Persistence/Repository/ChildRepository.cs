@@ -21,12 +21,12 @@ namespace AppointmentScheduler.Persistence.Repository
                 .AsNoTracking();
         }
 
-        public IEnumerable<Child> GetAllFlattened()
+        public IEnumerable<Child> GetAllFull()
         {
             return _entities;
         }
 
-        public Child GetAllFlattenedById(int id)
+        public Child GetAllFullById(int id)
         {
             return _entities.SingleOrDefault(s => s.Id == id);
         }
@@ -36,7 +36,7 @@ namespace AppointmentScheduler.Persistence.Repository
             return _entities.Where(x =>
                     x.Person.FirstName.Contains(param) || x.Person.MiddleName.Contains(param) || x.Person.LastName.Contains(param) ||
                     x.CareGiver.FirstName.Contains(param) || x.CareGiver.MiddleName.Contains(param) || x.CareGiver.LastName.Contains(param) ||
-                    x.UniqueNumber.Contains(param)
+                    x.UniqueNumber.Contains(param) || x.Person.HudumaNamba.Contains(param) || x.CareGiver.HudumaNamba.Contains(param)
                     )
                 .AsEnumerable();
         }

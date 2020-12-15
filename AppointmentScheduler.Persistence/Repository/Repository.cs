@@ -24,12 +24,13 @@ namespace AppointmentScheduler.Persistence.Repository
         {
             return _entities.SingleOrDefault(s => s.Id == id);
         }
-        public void Insert(T entity)
+        public T Insert(T entity)
         {
             if (entity == null) throw new ArgumentNullException(nameof(entity));
 
             _entities.Add(entity);
             Context.SaveChanges();
+            return entity;
         }
         public void Update(T entity)
         {

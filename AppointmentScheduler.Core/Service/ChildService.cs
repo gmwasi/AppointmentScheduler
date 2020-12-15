@@ -1,22 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AppointmentScheduler.Core.Entity;
 using AppointmentScheduler.Core.Interface;
 using AppointmentScheduler.Core.Model;
+using Microsoft.Extensions.Logging;
 
 namespace AppointmentScheduler.Core.Service
 {
     public class ChildService : IChildService
     {
         private readonly IChildRepository _childRepository;
+        private readonly IEmailService _emailService;
+        private readonly ILogger<ChildService> _logger;
 
-        public ChildService(IChildRepository childRepository)
+        public ChildService(IChildRepository childRepository, IEmailService emailService, ILogger<ChildService> logger)
         {
             _childRepository = childRepository;
+            _emailService = emailService;
+            _logger = logger;
         }
 
-        public async Task<bool> Register(Registration registration)
+        public async Task<Child> Register(Registration registration)
         {
             List<PersonContact> personContacts = new List<PersonContact>();
             List<PersonRelative> personRelatives = new List<PersonRelative>();
@@ -44,6 +50,7 @@ namespace AppointmentScheduler.Core.Service
             {
                 DateOfBirth = registration.CareGiver.DateOfBirth,
                 FacilityId = registration.CareGiver.FacilityId,
+                HudumaNamba = registration.CareGiver.HudumaNamba,
                 FirstName = registration.CareGiver.FirstName,
                 MiddleName = registration.CareGiver.MiddleName,
                 LastName = registration.CareGiver.LastName,
@@ -57,6 +64,7 @@ namespace AppointmentScheduler.Core.Service
             {
                 DateOfBirth = registration.Child.DateOfBirth,
                 FacilityId = registration.Child.FacilityId,
+                HudumaNamba = registration.Child.HudumaNamba,
                 FirstName = registration.Child.FirstName,
                 MiddleName = registration.Child.MiddleName,
                 LastName = registration.Child.LastName,
@@ -73,8 +81,23 @@ namespace AppointmentScheduler.Core.Service
             };
             try
             {
-                await Task.Run(() => _childRepository.Insert(child));
-                return true;
+                var result = await Task.Run(() => _childRepository.Insert(child));
+                //send notification email
+                try
+                {
+                    string message = $"Hello {careGiver.FirstName}\r\n\r\nYour child {person.FirstName} {person.LastName} has been successfully registered on the MCH Appointment Scheduling system.\r\n\r\nKind Regards, MCH Appointments Team\r\n\r\n";
+                    await Task.Run(() =>
+                    {
+                        if (careGiver.PersonContacts != null && careGiver.PersonContacts.FirstOrDefault() != null)
+                            _emailService.Send("mchappointments@gmail.com", careGiver.PersonContacts.FirstOrDefault()?.Email, "Child Registration",
+                                message);
+                    });
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError("Error sending registration email", e);
+                }
+                return result;
             }
             catch (Exception e)
             {

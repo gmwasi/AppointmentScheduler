@@ -6,6 +6,7 @@ namespace AppointmentScheduler.Core.Entity
 {
     public class Person : Entity
     {
+        public string HudumaNamba { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string LastName { get; set; }
