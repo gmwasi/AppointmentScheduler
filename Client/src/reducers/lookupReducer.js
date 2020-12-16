@@ -29,10 +29,10 @@ const lookupReducer = (state = initialState, action) => {
       return { ...state, maritalStatuses: [...action.payload] };
 
     case ACTION_TYPES.LOOKUP_RELATIONSHIP:
-      return { ...state, relationships: action.payload };
+      return { ...state, relationships: [...action.payload]};
 
     case ACTION_TYPES.LOOKUP_ROLE:
-      return { ...state, roles: action.payload };
+      return { ...state, roles: [...action.payload] };
 
     case ACTION_TYPES.LOOKUP_ERROR:
       return { ...state, error: action.payload };

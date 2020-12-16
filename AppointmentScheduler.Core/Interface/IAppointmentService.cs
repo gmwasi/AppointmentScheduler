@@ -9,7 +9,7 @@ namespace AppointmentScheduler.Core.Interface
     public interface IAppointmentService
     {
         IEnumerable<AppointmentView> GetAppointmentScheduleFromDob(DateTime dob);
-        Task<bool> SaveAppointments(List<Appointment> appointments);
+        Task<bool> SaveAppointments(List<AppointmentModel> appointments);
 
         Task<bool> UpdateStatus(int appointmentId, int status);
 

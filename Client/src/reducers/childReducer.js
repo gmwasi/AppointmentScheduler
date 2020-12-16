@@ -20,7 +20,7 @@ const childReducer = (state = initialState, action) => {
       return { ...state, child: action.payload };
 
     case ACTION_TYPES.CHILD_REGISTER:
-      return { ...state, registered: [...action.payload] };
+      return { ...state, registered: action.payload };
 
     case ACTION_TYPES.CHILD_ERROR:
       return { ...state, error: action.payload };

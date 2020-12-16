@@ -55,7 +55,7 @@ namespace AppointmentScheduler.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save(List<Appointment> appointments)
+        public async Task<IActionResult> Save(List<AppointmentModel> appointments)
         {
             try
             {

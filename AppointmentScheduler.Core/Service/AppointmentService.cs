@@ -41,12 +41,19 @@ namespace AppointmentScheduler.Core.Service
             return result;
         }
 
-        public async Task<bool> SaveAppointments(List<Appointment> appointments)
+        public async Task<bool> SaveAppointments(List<AppointmentModel> appointmentModels)
         {
             try
             {
-                foreach (var appointment in appointments)
+                foreach (var appointmentModel in appointmentModels)
                 {
+                    var appointment = new Appointment()
+                    {
+                        AppointmentDate = appointmentModel.AppointmentDate,
+                        AppointmentStatus = appointmentModel.Attended ? 32 : 31,
+                        ChildId = appointmentModel.ChildId,
+                        ImmunizationId = appointmentModel.ImmunizationId,
+                    };
                     await Task.Run(() => _appointmentRepository.Insert(appointment));
                 }
                 return true;
