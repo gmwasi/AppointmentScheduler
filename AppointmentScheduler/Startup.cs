@@ -9,6 +9,8 @@ using AppointmentScheduler.Core.Interface;
 using AppointmentScheduler.Core.Service;
 using AppointmentScheduler.Persistence;
 using AppointmentScheduler.Persistence.Repository;
+using Hangfire;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -89,6 +91,23 @@ namespace AppointmentScheduler
                     };
                 });
 
+            // Add Hangfire services.
+            services.AddHangfire(configuration => configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(Configuration.GetConnectionString("DefaultConnection"), new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    DisableGlobalLocks = true
+                }));
+
+            // Add the processing server as IHostedService
+            services.AddHangfireServer();
+
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IFacilityRepository, FacilityRepository>();
             services.AddScoped<IImmunizationRepository, ImmunizationRepository>();
@@ -126,7 +145,10 @@ namespace AppointmentScheduler
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHangfireDashboard();
             });
+
+            app.UseHangfireDashboard();
         }
     }
 }

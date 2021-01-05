@@ -17,6 +17,9 @@ namespace AppointmentScheduler.Persistence.Repository
                 .Include(i => i.Immunization)
                 .Include(i => i.Child)
                 .Include(i => i.Child.Person)
+                .Include(i=> i.Child.CareGiver)
+                .Include(i => i.Child.CareGiver.PersonContacts)
+                .Include(i => i.Child.Person.PersonContacts)
                 .AsNoTracking();
         }
 

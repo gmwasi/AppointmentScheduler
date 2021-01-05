@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AppointmentScheduler.Core.Entity;
 using AppointmentScheduler.Core.Interface;
 using AppointmentScheduler.Core.Model;
+using Hangfire;
 
 namespace AppointmentScheduler.Core.Service
 {
@@ -12,11 +13,13 @@ namespace AppointmentScheduler.Core.Service
     {
         private readonly IImmunizationRepository _immunizationRepository;
         private readonly IAppointmentRepository _appointmentRepository;
+        private readonly IEmailService _emailService;
 
-        public AppointmentService(IImmunizationRepository immunizationRepository, IAppointmentRepository appointmentRepository)
+        public AppointmentService(IImmunizationRepository immunizationRepository, IAppointmentRepository appointmentRepository, IEmailService emailService)
         {
             _immunizationRepository = immunizationRepository;
             _appointmentRepository = appointmentRepository;
+            _emailService = emailService;
         }
 
         public IEnumerable<AppointmentView> GetAppointmentScheduleFromDob(DateTime dob)
@@ -55,6 +58,12 @@ namespace AppointmentScheduler.Core.Service
                         ImmunizationId = appointmentModel.ImmunizationId,
                     };
                     await Task.Run(() => _appointmentRepository.Insert(appointment));
+
+                    //schedule reminders for future appointments marked as not attended
+                    if (appointment.AppointmentStatus == 31 && appointment.AppointmentDate >= DateTime.Now)
+                    {
+                        SetAppointmentReminder(appointment.Id, appointment.AppointmentDate);
+                    } 
                 }
                 return true;
             }
@@ -95,6 +104,23 @@ namespace AppointmentScheduler.Core.Service
                 Console.WriteLine(e);
                 throw;
             }
+        }
+
+        public void SendAppointmentReminder(int appointmentId)
+        {
+            var appointment = _appointmentRepository.GetByIdFull(appointmentId);
+            string email = appointment.Child.Person.PersonContacts.FirstOrDefault()?.Email;
+            string appointmentDate = appointment.AppointmentDate.ToString("dddd, dd MMMM yyyy");
+            string message = $"Hi {appointment.Child.CareGiver.FirstName}. Just a reminder that you have an appointment for your child {appointment.Child.Person.FirstName} coming up at {appointmentDate} for {appointment.Immunization.Description}";
+            _emailService.Send("mchappointments@gmail.com", email, "Appointment Reminder", message);
+            
+        }
+
+        private void SetAppointmentReminder(int appointmentId, DateTime appointmentDate)
+        {
+            // subtracting days aapointment reminder should be sent before
+            double timeSpanDays = ((appointmentDate - DateTime.Today).TotalDays) - 1;
+            BackgroundJob.Schedule(() => SendAppointmentReminder(appointmentId), TimeSpan.FromDays(timeSpanDays));
         }
 
         private DateTime CalculateDate(DateTime dob, Period period, int duration)
