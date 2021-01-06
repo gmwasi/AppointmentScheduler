@@ -40,7 +40,6 @@ const AppointmentsPage = props => {
           const date = moment(element.appointmentDate).format('YYYY-MM-DD');
           element.appointmentDate = date;
         });
-        console.log(result)
         setAppointmentSchedule(result);
         setLoading(false);
       })

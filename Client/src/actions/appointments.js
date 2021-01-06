@@ -23,6 +23,26 @@ export const fetchAllAppointments = (onSuccess, onError) => (dispatch) => {
     });
 };
 
+export const fetchAppointmentsByChild = (childId, onSuccess, onError) => (dispatch) => {
+  axios
+    .get(`${url}appointments/child/${childId}`)
+    .then((response) => {
+      dispatch({
+        type: ACTION_TYPES.APPOINTMENTS_FETCH_BY_CHILD,
+        payload: response.data,
+      });
+      if (onSuccess) {
+        onSuccess();
+      }
+    })
+    .catch((error) => {
+      if (onError) {
+        onError();
+        toast.error("Something went wrong loading appointments");
+      }
+    });
+};
+
 export const getAppointmentSchedule = (dob, onSuccess, onError) => (
   dispatch,
 ) => {

@@ -39,5 +39,10 @@ namespace AppointmentScheduler.Persistence.Repository
             return appointments;
         }
 
+        public IEnumerable<Appointment> GetByChild(int childId)
+        {
+            var appointments = _entities.Where(e => e.ChildId == childId).AsEnumerable();
+            return appointments;
+        }
     }
 }

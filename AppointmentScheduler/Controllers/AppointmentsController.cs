@@ -47,6 +47,12 @@ namespace AppointmentScheduler.Controllers
             return _appointmentRepository.GetByMonth(month);
         }
 
+        [HttpGet("CHILD/{childId}")]
+        public IEnumerable<Appointment> GetByChild(int childId)
+        {
+            return _appointmentRepository.GetByChild(childId);
+        }
+
         [HttpGet("SCHEDULE/{dateOfBirth}")]
         public IEnumerable<AppointmentView> GetAppointmentScheduleFromDob(string dateOfBirth)
         {

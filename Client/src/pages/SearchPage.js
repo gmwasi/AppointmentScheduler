@@ -2,10 +2,11 @@ import { connect } from "react-redux";
 import React, { useEffect } from "react";
 import Page from 'components/Page';
 import {
-  Button,
   Col,
   Row,
+  NavLink as BSNavLink,
 } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
 import { MdAccountCircle } from "react-icons/md";
 import * as ACTION_TYPES from "../actions/types";
 import { lookup } from "../actions/lookups";
@@ -44,17 +45,19 @@ const SearchPage = (props) => {
               uniqueNumber: row.uniqueNumber,
               name: row.person.firstName + " " + row.person.middleName + " " + row.person.lastName,
               gender: props.gender.find(o => o.id === row.person.genderId).name,
-              dateOfBirth: moment(row.person.dateOfBirth).format('YYYY-MM-DD'),
+              dateOfBirth: moment(row.person.dateOfBirth).format('YYYY-MMM-DD'),
               careGiver: row.careGiver.firstName + " " + row.careGiver.middleName + " " + row.careGiver.lastName,
               actions: (
-                <Button
-                  size="sm"
-                  color="link"
-                  onClick={() => console.log('click')}
+                <BSNavLink
+                  id={`profile${row.id}`}
+                  tag={NavLink}
+                  to={`/profile/${row.id}`}
+                  activeClassName="active"
+                  exact={true}
                 >
                   <MdAccountCircle size="15" />{" "}
                   <span style={{ color: "#000" }}>View Profile</span>
-                </Button>
+                </BSNavLink>
               ),
             }))}
             title="Children"

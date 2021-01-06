@@ -8,5 +8,6 @@ namespace AppointmentScheduler.Core.Interface
         Appointment GetByIdFull(int id);
         IEnumerable<Appointment> GetAllFull();
         IEnumerable<Appointment> GetByMonth(int month);
+        IEnumerable<Appointment> GetByChild(int childId);
     }
 }
