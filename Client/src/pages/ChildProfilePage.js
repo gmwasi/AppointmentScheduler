@@ -20,18 +20,10 @@ import moment from 'moment';
 
 
 const ChildProfilePage = (props) => {
-
-  useEffect(() => {
-    props.lookup("gender", ACTION_TYPES.LOOKUP_GENDER);
-  }, []);
-
-  useEffect(() => {
-    props.lookup("maritalStatus", ACTION_TYPES.LOOKUP_MARITAL_STATUS);
-  }, []);
-
-  useEffect(() => {
-    props.lookup("appointmentStatus", ACTION_TYPES.LOOKUP_APPOINTMENT_STATUS);
-  }, []);
+  
+  props.lookup("gender", ACTION_TYPES.LOOKUP_GENDER);
+  props.lookup("maritalStatus", ACTION_TYPES.LOOKUP_MARITAL_STATUS);
+  props.lookup("appointmentStatus", ACTION_TYPES.LOOKUP_APPOINTMENT_STATUS);
 
   useEffect(() => {
     const { match: { params } } = props;
@@ -137,7 +129,7 @@ const ChildProfilePage = (props) => {
                 <BSNavLink
                   id={`appointment${row.id}`}
                   tag={NavLink}
-                  to={`/appointment/${row.id}`}
+                  to={`/profile/${row.childId}/appointment/${row.id}`}
                   activeClassName="active"
                   exact={true}
                 >

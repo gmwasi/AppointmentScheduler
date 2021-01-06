@@ -70,5 +70,11 @@ namespace AppointmentScheduler.Controllers
         {
             return _lookupRepository.GetByType(LookupType.AppointmentStatus);
         }
+
+        [HttpGet("APPOINTMENTSTATUSMARK")]
+        public IEnumerable<Lookup> GetMarkAppointmentStatus()
+        {
+            return _lookupRepository.GetByType(LookupType.AppointmentStatus).Where(x => x.Name.Contains("Attend"));
+        }
     }
 }

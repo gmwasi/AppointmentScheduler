@@ -9,5 +9,6 @@ namespace AppointmentScheduler.Core.Interface
         IEnumerable<Appointment> GetAllFull();
         IEnumerable<Appointment> GetByMonth(int month);
         IEnumerable<Appointment> GetByChild(int childId);
+        IEnumerable<Appointment> GetMissedAppointments();
     }
 }

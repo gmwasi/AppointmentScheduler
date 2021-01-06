@@ -41,7 +41,7 @@ namespace AppointmentScheduler.Controllers
             return _appointmentRepository.GetByIdFull(id);
         }
 
-        [HttpGet("{month}")]
+        [HttpGet("MONTH/{month}")]
         public IEnumerable<Appointment> GetByMonth(int month)
         {
             return _appointmentRepository.GetByMonth(month);

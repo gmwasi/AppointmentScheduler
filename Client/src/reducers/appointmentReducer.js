@@ -1,6 +1,7 @@
 import * as ACTION_TYPES from "../actions/types";
 
 const initialState = {
+  appointment: {},
   list: [],
   schedule: [],
   child: [],
@@ -17,6 +18,9 @@ const appointmentReducer = (state = initialState, action) => {
 
     case ACTION_TYPES.APPOINTMENTS_FETCH_BY_CHILD:
       return { ...state, child: [...action.payload] };
+
+    case ACTION_TYPES.APPOINTMENTS_FETCH_BY_ID:
+      return { ...state, appointment: action.payload };
 
     case ACTION_TYPES.APPOINTMENTS_ERROR:
       return { ...state, error: action.payload };

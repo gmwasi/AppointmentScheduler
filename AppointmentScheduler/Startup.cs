@@ -23,6 +23,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Hangfire;
 
 namespace AppointmentScheduler
 {
@@ -127,7 +128,7 @@ namespace AppointmentScheduler
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -149,6 +150,7 @@ namespace AppointmentScheduler
             });
 
             app.UseHangfireDashboard();
+            RecurringJob.AddOrUpdate<IAppointmentService>(x => x.MarkMissedAppointments(), Cron.Daily);
         }
     }
 }

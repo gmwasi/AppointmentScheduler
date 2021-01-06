@@ -116,6 +116,16 @@ namespace AppointmentScheduler.Core.Service
             
         }
 
+        public async Task<bool> MarkMissedAppointments()
+        {
+            var missedAppointments = _appointmentRepository.GetMissedAppointments();
+            foreach (var appointment in missedAppointments)
+            {
+                await UpdateStatus(appointment.Id, 33);
+            }
+            return true;
+        }
+
         private void SetAppointmentReminder(int appointmentId, DateTime appointmentDate)
         {
             // subtracting days aapointment reminder should be sent before

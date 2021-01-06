@@ -14,5 +14,9 @@ namespace AppointmentScheduler.Core.Interface
         Task<bool> UpdateStatus(int appointmentId, int status);
 
         Task<bool> UpdateAppointmentDate(int appointmentId, DateTime date);
+
+        void SendAppointmentReminder(int appointmentId);
+
+        Task<bool> MarkMissedAppointments();
     }
 }

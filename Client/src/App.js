@@ -16,6 +16,7 @@ const RegisterPage = React.lazy(() => import('pages/RegisterPage'));
 const AppointmentsPage = React.lazy(() => import('pages/AppointmentsPage'));
 const SearchPage = React.lazy(() => import('pages/SearchPage'));
 const ProfilePage = React.lazy(() => import('pages/ChildProfilePage'));
+const AppointmentPage = React.lazy(() => import('pages/AppointmentCheckinPage'));
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -52,6 +53,7 @@ class App extends React.Component {
                   <PrivateRoute exact path="/appointments" component={AppointmentsPage} />
                   <PrivateRoute exact path="/search" component={SearchPage} />
                   <PrivateRoute exact path="/profile/:id" component={ProfilePage} />
+                  <PrivateRoute exact path="/profile/:childId/appointment/:id" component={AppointmentPage} />
                 </React.Suspense>
               </MainLayout>
               <Redirect to="/" />

@@ -43,6 +43,26 @@ export const fetchAppointmentsByChild = (childId, onSuccess, onError) => (dispat
     });
 };
 
+export const fetchAppointmentById = (id, onSuccess, onError) => (dispatch) => {
+  axios
+    .get(`${url}appointments/${id}`)
+    .then((response) => {
+      dispatch({
+        type: ACTION_TYPES.APPOINTMENTS_FETCH_BY_ID,
+        payload: response.data,
+      });
+      if (onSuccess) {
+        onSuccess();
+      }
+    })
+    .catch((error) => {
+      if (onError) {
+        onError();
+        toast.error("Something went wrong loading appointment");
+      }
+    });
+};
+
 export const getAppointmentSchedule = (dob, onSuccess, onError) => (
   dispatch,
 ) => {
@@ -127,7 +147,7 @@ export const updateAppointmentStatus = (id, status, onSuccess, onError) => (
   dispatch,
 ) => {
   axios
-    .put(`${url}appointments/date/${id}/${status}`)
+    .put(`${url}appointments/status/${id}/${status}`)
     .then((response) => {
       dispatch({
         type: ACTION_TYPES.APPOINTMENTS_UPDATE_STATUS,

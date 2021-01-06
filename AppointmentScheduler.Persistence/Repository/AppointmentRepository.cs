@@ -44,5 +44,10 @@ namespace AppointmentScheduler.Persistence.Repository
             var appointments = _entities.Where(e => e.ChildId == childId).AsEnumerable();
             return appointments;
         }
+
+        public IEnumerable<Appointment> GetMissedAppointments()
+        {
+            return _entities.Where(x => x.AppointmentDate < DateTime.Now && x.AppointmentStatus == 31);
+        }
     }
 }
