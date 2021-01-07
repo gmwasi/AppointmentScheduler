@@ -103,7 +103,7 @@ const AppointmentsPage = props => {
                           <Input
                             type="date"
                             name={index}
-                            value={moment(appointmentDate).format('YYYY-MM-DD')}
+                            defaultValue={moment(appointmentDate).format('YYYY-MM-DD')}
                             onChange={handleInputChange}
                           />
                         </Col>
@@ -113,7 +113,6 @@ const AppointmentsPage = props => {
                               <Input
                                 name={index}
                                 type="checkbox"
-                                checked={false}
                                 onChange={handleCheckChange}
                               /> Attended
                             </Label>
