@@ -24,8 +24,8 @@ namespace AppointmentScheduler.Controllers
 
         public AuthenticationController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
-            this._userManager = userManager;
-            this._roleManager = roleManager;
+            _userManager = userManager;
+            _roleManager = roleManager;
             _configuration = configuration;
         }
 
@@ -70,7 +70,7 @@ namespace AppointmentScheduler.Controllers
 
         [HttpPost]
         [Route("REGISTER")]
-        public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
+        public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
             if (userExists != null)
@@ -128,13 +128,13 @@ namespace AppointmentScheduler.Controllers
                     await _userManager.AddToRoleAsync(user, UserRoles.User);
                 }
             }
-            else
+            /*else
             {
                 if (await _roleManager.RoleExistsAsync(UserRoles.CareGiver))
                 {
                     await _userManager.AddToRoleAsync(user, UserRoles.CareGiver);
                 }
-            }
+            }*/
             
 
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });

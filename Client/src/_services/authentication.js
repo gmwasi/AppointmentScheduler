@@ -1,4 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
+import jwt_decode from "jwt-decode";
 import { url } from "../api";
 import { handleResponse } from '../_helpers';
 import store from '../store';
@@ -7,11 +8,15 @@ import * as ACTION_TYPES from "../actions/types";
 const { dispatch } = store;
 const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
 
+const currentRole = JSON.parse(localStorage.getItem('currentUser')) ? jwt_decode(JSON.parse(localStorage.getItem('currentUser')).token)['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] : '';
+const currentUsername =  JSON.parse(localStorage.getItem('currentUser')) ? jwt_decode(JSON.parse(localStorage.getItem('currentUser')).token)['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'] : '';
 export const authentication = {
     login,
     logout,
     currentUser: currentUserSubject.asObservable(),
-    get currentUserValue () { return currentUserSubject.value }
+    get currentUserValue () { return currentUserSubject.value },
+    currentRole: currentRole,
+    currentUsername: currentUsername,
 };
 
 function login(username, password, remember) {

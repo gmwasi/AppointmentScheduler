@@ -45,6 +45,12 @@ namespace AppointmentScheduler.Controllers
             return _childRepository.Find(param);
         }
 
+        [HttpGet("EMAIL/{email}")]
+        public Child FindChildByEmail(string email)
+        {
+            return _childRepository.GetChildByEmail(email);
+        }
+
         [HttpPost("REGISTER")]
         public async Task<IActionResult> Register([FromBody] Registration registration)
         {

@@ -118,7 +118,7 @@ namespace AppointmentScheduler.Core.Service
 
         public async Task<bool> MarkMissedAppointments()
         {
-            var missedAppointments = _appointmentRepository.GetMissedAppointments();
+            var missedAppointments = _appointmentRepository.GetMissedAppointments().ToList();
             foreach (var appointment in missedAppointments)
             {
                 await UpdateStatus(appointment.Id, 33);

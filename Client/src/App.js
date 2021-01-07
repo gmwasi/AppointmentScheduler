@@ -17,6 +17,8 @@ const AppointmentsPage = React.lazy(() => import('pages/AppointmentsPage'));
 const SearchPage = React.lazy(() => import('pages/SearchPage'));
 const ProfilePage = React.lazy(() => import('pages/ChildProfilePage'));
 const AppointmentPage = React.lazy(() => import('pages/AppointmentCheckinPage'));
+const PortalPage = React.lazy(() => import('pages/PortalPage'));
+const AppointmentEditPage = React.lazy(() => import('pages/AppointmentEditPage'));
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -49,11 +51,13 @@ class App extends React.Component {
               <MainLayout breakpoint={this.props.breakpoint}>
                 <React.Suspense fallback={<PageSpinner />}>
                   <PrivateRoute exact path="/" component={DashboardPage} />
-                  <PrivateRoute exact path="/register" component={RegisterPage} />
-                  <PrivateRoute exact path="/appointments" component={AppointmentsPage} />
-                  <PrivateRoute exact path="/search" component={SearchPage} />
-                  <PrivateRoute exact path="/profile/:id" component={ProfilePage} />
-                  <PrivateRoute exact path="/profile/:childId/appointment/:id" component={AppointmentPage} />
+                  <PrivateRoute exact path="/register" roles={['Administrator', 'User']} component={RegisterPage} />
+                  <PrivateRoute exact path="/appointments" roles={['Administrator', 'User']} component={AppointmentsPage} />
+                  <PrivateRoute exact path="/search" roles={['Administrator', 'User']} component={SearchPage} />
+                  <PrivateRoute exact path="/profile/:id" roles={['Administrator', 'User']} component={ProfilePage} />
+                  <PrivateRoute exact path="/profile/:childId/appointment/:id" roles={['Administrator', 'User']} component={AppointmentPage} />
+                  <PrivateRoute exact path="/portal" roles={['CareGiver']} component={PortalPage} />
+                  <PrivateRoute exact path="/edit-appointment/:id" roles={['CareGiver']} component={AppointmentEditPage} />
                 </React.Suspense>
               </MainLayout>
               <Redirect to="/" />

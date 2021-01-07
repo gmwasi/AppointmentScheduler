@@ -47,7 +47,7 @@ namespace AppointmentScheduler.Persistence.Seed
                 Id = 1, Name = "BCG",
                 Description = "bacille Calmette-Guerin, is a vaccine for tuberculosis (TB) disease",
                 Dose = "0.05mls for child below 1 year/0.1mls for child above 1 year",
-                AdministrationMode = "Intra- dermal lef fore arm", SideEffects = "side effect"
+                AdministrationMode = "Intra- dermal left fore arm", SideEffects = "side effect"
             };
             var polio = new Immunization
             {

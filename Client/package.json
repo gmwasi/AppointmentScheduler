@@ -17,6 +17,7 @@
     "classnames": "^2.2.6",
     "d3-geo": "^1.11.3",
     "faker": "^4.1.0",
+    "jwt-decode": "^3.1.2",
     "material-table": "^1.69.2",
     "moment": "^2.29.1",
     "node-sass": "4.14.1",

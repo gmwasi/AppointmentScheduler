@@ -19,6 +19,9 @@ const childReducer = (state = initialState, action) => {
     case ACTION_TYPES.CHILD_GET_BY_ID:
       return { ...state, child: action.payload };
 
+    case ACTION_TYPES.CHILD_GET_BY_EMAIL:
+      return { ...state, child: action.payload };
+
     case ACTION_TYPES.CHILD_REGISTER:
       return { ...state, registered: action.payload };
 

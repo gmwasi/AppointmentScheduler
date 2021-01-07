@@ -2,6 +2,7 @@ import SourceLink from 'components/SourceLink';
 import React from 'react';
 import {
   MdDashboard,
+  MdInfo,
   MdKeyboardArrowDown,
   MdPersonAdd,
   MdRadioButtonChecked,
@@ -18,16 +19,25 @@ import {
   NavLink as BSNavLink,
 } from 'reactstrap';
 import bn from 'utils/bemnames';
+import { authentication } from '../../_services/authentication';
 
 const navComponents = [
   { to: '/', name: 'Report 1', exact: false, Icon: MdRadioButtonChecked },
 ];
+let navItems = [];
+if (authentication.currentRole === 'Administrator' || authentication.currentRole === 'User') {
+  navItems = [
+    { to: '/', name: 'dashboard', exact: true, Icon: MdDashboard },
+    { to: '/register', name: 'register', exact: true, Icon: MdPersonAdd },
+    { to: '/search', name: 'Find Child', exact: false, Icon: MdSearch },
+  ];
+} else if (authentication.currentRole === 'CareGiver') {
+  navItems = [
+    { to: '/', name: 'dashboard', exact: true, Icon: MdDashboard },
+    { to: '/portal', name: 'portal', exact: true, Icon: MdInfo },
+  ];
+}
 
-const navItems = [
-  { to: '/', name: 'dashboard', exact: true, Icon: MdDashboard },
-  { to: '/register', name: 'register', exact: true, Icon: MdPersonAdd },
-  { to: '/search', name: 'Find Child', exact: false, Icon: MdSearch },
-];
 
 const bem = bn.create('sidebar');
 
@@ -72,7 +82,7 @@ class Sidebar extends React.Component {
               </NavItem>
             ))}
 
-            <NavItem
+            {(authentication.currentRole === 'Administrator' || authentication.currentRole === 'User') && (<NavItem
               className={bem.e('nav-item')}
               onClick={this.handleClick('Reports')}
             >
@@ -93,7 +103,7 @@ class Sidebar extends React.Component {
                   }}
                 />
               </BSNavLink>
-            </NavItem>
+            </NavItem>)}
             <Collapse isOpen={this.state.isOpenReports}>
               {navComponents.map(({ to, name, exact, Icon }, index) => (
                 <NavItem key={index} className={bem.e('nav-item')}>

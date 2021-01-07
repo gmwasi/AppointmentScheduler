@@ -31,10 +31,10 @@ const AppointmentCheckinPage = (props) => {
         CheckinPageForm
     );
 
-    props.lookup("gender", ACTION_TYPES.LOOKUP_GENDER);
-
     useEffect(() => {
+        props.lookup("gender", ACTION_TYPES.LOOKUP_GENDER);
         props.lookup("appointmentStatusMark", ACTION_TYPES.LOOKUP_APPOINTMENT_STATUS);
+        setTimeout(console.log(), 1500); 
     }, []);
 
     useEffect(() => {

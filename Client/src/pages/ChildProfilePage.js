@@ -20,10 +20,13 @@ import moment from 'moment';
 
 
 const ChildProfilePage = (props) => {
-  
-  props.lookup("gender", ACTION_TYPES.LOOKUP_GENDER);
-  props.lookup("maritalStatus", ACTION_TYPES.LOOKUP_MARITAL_STATUS);
-  props.lookup("appointmentStatus", ACTION_TYPES.LOOKUP_APPOINTMENT_STATUS);
+
+  useEffect(() => {
+    props.lookup("gender", ACTION_TYPES.LOOKUP_GENDER);
+    props.lookup("maritalStatus", ACTION_TYPES.LOOKUP_MARITAL_STATUS);
+    props.lookup("appointmentStatus", ACTION_TYPES.LOOKUP_APPOINTMENT_STATUS);
+    setTimeout(console.log(), 1500); 
+  }, []);
 
   useEffect(() => {
     const { match: { params } } = props;

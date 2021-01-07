@@ -8,5 +8,6 @@ namespace AppointmentScheduler.Core.Interface
         IEnumerable<Child> GetAllFull();
         Child GetAllFullById(int id);
         IEnumerable<Child> Find(string param);
+        Child GetChildByEmail(string email);
     }
 }

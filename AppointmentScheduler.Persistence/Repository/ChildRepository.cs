@@ -40,5 +40,12 @@ namespace AppointmentScheduler.Persistence.Repository
                     )
                 .AsEnumerable();
         }
+
+        public Child GetChildByEmail(string email)
+        {
+            return _entities.Where(x =>
+                    x.Person.PersonContacts.FirstOrDefault().Email.Contains(email) || x.CareGiver.PersonContacts.FirstOrDefault().Email.Contains(email)
+                    ).FirstOrDefault();
+        }
     }
 }
