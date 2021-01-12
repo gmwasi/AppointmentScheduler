@@ -1,29 +1,21 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using AppointmentScheduler.Core.Entity;
 using AppointmentScheduler.Core.Interface;
 using AppointmentScheduler.Core.Service;
 using AppointmentScheduler.Persistence;
 using AppointmentScheduler.Persistence.Repository;
 using Hangfire;
-using Hangfire.SqlServer;
+using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Hangfire;
 
 namespace AppointmentScheduler
 {
@@ -53,16 +45,9 @@ namespace AppointmentScheduler
                     });
             });
 
-            //configure EF Core sql server
-            var connectionString = Configuration["ConnectionStrings:defaultConnection"];
-            services.AddDbContext<AppointmentsContext>(
-                o =>
-                {
-                    o.UseSqlServer(connectionString,
-                        x => x.MigrationsAssembly(typeof(AppointmentsContext).GetTypeInfo().Assembly.GetName()
-                            .Name));
-                }
-            );
+            //configure EF Core Postgres SQL
+            services.AddDbContext<AppointmentsContext>(options =>
+            options.UseNpgsql(Configuration.GetConnectionString("defaultConnection")));
 
             // For Identity  
             services.AddIdentity<User, IdentityRole>()
@@ -93,18 +78,8 @@ namespace AppointmentScheduler
                 });
 
             // Add Hangfire services.
-            services.AddHangfire(configuration => configuration
-                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
-                .UseSimpleAssemblyNameTypeSerializer()
-                .UseRecommendedSerializerSettings()
-                .UseSqlServerStorage(Configuration.GetConnectionString("DefaultConnection"), new SqlServerStorageOptions
-                {
-                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
-                    QueuePollInterval = TimeSpan.Zero,
-                    UseRecommendedIsolationLevel = true,
-                    DisableGlobalLocks = true
-                }));
+            services.AddHangfire(config =>
+                config.UsePostgreSqlStorage(Configuration.GetConnectionString("defaultConnection")));
 
             // Add the processing server as IHostedService
             services.AddHangfireServer();
@@ -140,6 +115,8 @@ namespace AppointmentScheduler
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

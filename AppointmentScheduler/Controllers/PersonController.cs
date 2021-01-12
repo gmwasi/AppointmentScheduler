@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using AppointmentScheduler.Core.Entity;
 using AppointmentScheduler.Core.Interface;
-using AppointmentScheduler.Core.Model;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -13,6 +9,7 @@ namespace AppointmentScheduler.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PersonController : ControllerBase
     {
         private readonly ILogger<LookupController> _logger;

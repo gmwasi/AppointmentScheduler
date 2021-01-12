@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using AppointmentScheduler.Core.Entity;
 using AppointmentScheduler.Core.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -9,6 +10,7 @@ namespace AppointmentScheduler.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ImmunizationsController : ControllerBase
     {
         private readonly ILogger<ImmunizationsController> _logger;

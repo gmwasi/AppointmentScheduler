@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AppointmentScheduler.Core.Entity;
 using AppointmentScheduler.Core.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,7 @@ namespace AppointmentScheduler.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AuthenticationController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
@@ -31,6 +33,7 @@ namespace AppointmentScheduler.Controllers
 
         [HttpPost]
         [Route("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
@@ -70,6 +73,7 @@ namespace AppointmentScheduler.Controllers
 
         [HttpPost]
         [Route("REGISTER")]
+        [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
@@ -128,15 +132,6 @@ namespace AppointmentScheduler.Controllers
                     await _userManager.AddToRoleAsync(user, UserRoles.User);
                 }
             }
-            /*else
-            {
-                if (await _roleManager.RoleExistsAsync(UserRoles.CareGiver))
-                {
-                    await _userManager.AddToRoleAsync(user, UserRoles.CareGiver);
-                }
-            }*/
-            
-
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
         }
     }

@@ -3,8 +3,8 @@ using System;
 using AppointmentScheduler.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace AppointmentScheduler.Persistence.Migrations
 {
@@ -15,28 +15,34 @@ namespace AppointmentScheduler.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .UseIdentityByDefaultColumns()
+                .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.1");
 
             modelBuilder.Entity("AppointmentScheduler.Core.Entity.Appointment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<DateTime>("AppointmentDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("AppointmentStatus")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ChildId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("ImmunizationId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -51,17 +57,23 @@ namespace AppointmentScheduler.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<int>("CareGiverId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("PersonId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("UniqueNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -78,32 +90,38 @@ namespace AppointmentScheduler.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<int>("CountyId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("FacilityLevelId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Latitude")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("Longitude")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("MflCode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PostalAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -128,23 +146,29 @@ namespace AppointmentScheduler.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<string>("AdministrationMode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Dose")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("SideEffects")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -154,7 +178,7 @@ namespace AppointmentScheduler.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            AdministrationMode = "Intra- dermal lef fore arm",
+                            AdministrationMode = "Intra- dermal left fore arm",
                             Description = "bacille Calmette-Guerin, is a vaccine for tuberculosis (TB) disease",
                             Dose = "0.05mls for child below 1 year/0.1mls for child above 1 year",
                             Name = "BCG",
@@ -229,17 +253,23 @@ namespace AppointmentScheduler.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("Duration")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ImmunizationId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("Period")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -260,105 +290,120 @@ namespace AppointmentScheduler.Persistence.Migrations
                             Id = 2,
                             Duration = 6,
                             ImmunizationId = 2,
-                            Period = 1
+                            Period = 1,
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 660, DateTimeKind.Local).AddTicks(6060)
                         },
                         new
                         {
                             Id = 3,
                             Duration = 10,
                             ImmunizationId = 2,
-                            Period = 1
+                            Period = 1,
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 660, DateTimeKind.Local).AddTicks(6071)
                         },
                         new
                         {
                             Id = 4,
                             Duration = 14,
                             ImmunizationId = 2,
-                            Period = 1
+                            Period = 1,
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 660, DateTimeKind.Local).AddTicks(6073)
                         },
                         new
                         {
                             Id = 5,
                             Duration = 14,
                             ImmunizationId = 3,
-                            Period = 1
+                            Period = 1,
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 660, DateTimeKind.Local).AddTicks(6074)
                         },
                         new
                         {
                             Id = 6,
                             Duration = 6,
                             ImmunizationId = 4,
-                            Period = 1
+                            Period = 1,
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 660, DateTimeKind.Local).AddTicks(6076)
                         },
                         new
                         {
                             Id = 7,
                             Duration = 10,
                             ImmunizationId = 4,
-                            Period = 1
+                            Period = 1,
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 660, DateTimeKind.Local).AddTicks(6077)
                         },
                         new
                         {
                             Id = 8,
                             Duration = 14,
                             ImmunizationId = 4,
-                            Period = 1
+                            Period = 1,
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 660, DateTimeKind.Local).AddTicks(6078)
                         },
                         new
                         {
                             Id = 9,
                             Duration = 6,
                             ImmunizationId = 5,
-                            Period = 1
+                            Period = 1,
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 660, DateTimeKind.Local).AddTicks(6080)
                         },
                         new
                         {
                             Id = 10,
                             Duration = 10,
                             ImmunizationId = 5,
-                            Period = 1
+                            Period = 1,
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 660, DateTimeKind.Local).AddTicks(6081)
                         },
                         new
                         {
                             Id = 11,
                             Duration = 9,
                             ImmunizationId = 6,
-                            Period = 2
+                            Period = 2,
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 660, DateTimeKind.Local).AddTicks(6083)
                         },
                         new
                         {
                             Id = 12,
                             Duration = 18,
                             ImmunizationId = 6,
-                            Period = 2
+                            Period = 2,
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 660, DateTimeKind.Local).AddTicks(6084)
                         },
                         new
                         {
                             Id = 13,
                             Duration = 9,
                             ImmunizationId = 7,
-                            Period = 2
+                            Period = 2,
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 660, DateTimeKind.Local).AddTicks(6086)
                         },
                         new
                         {
                             Id = 14,
                             Duration = 6,
                             ImmunizationId = 8,
-                            Period = 1
+                            Period = 1,
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 660, DateTimeKind.Local).AddTicks(6087)
                         },
                         new
                         {
                             Id = 15,
                             Duration = 10,
                             ImmunizationId = 8,
-                            Period = 1
+                            Period = 1,
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 660, DateTimeKind.Local).AddTicks(6089)
                         },
                         new
                         {
                             Id = 16,
                             Duration = 14,
                             ImmunizationId = 8,
-                            Period = 1
+                            Period = 1,
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 660, DateTimeKind.Local).AddTicks(6090)
                         });
                 });
 
@@ -366,14 +411,20 @@ namespace AppointmentScheduler.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("LookupType")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -384,187 +435,218 @@ namespace AppointmentScheduler.Persistence.Migrations
                         {
                             Id = 1,
                             LookupType = 0,
-                            Name = "Male"
+                            Name = "Male",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 658, DateTimeKind.Local).AddTicks(4154)
                         },
                         new
                         {
                             Id = 2,
                             LookupType = 0,
-                            Name = "Female"
+                            Name = "Female",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2277)
                         },
                         new
                         {
                             Id = 3,
                             LookupType = 1,
-                            Name = "Single"
+                            Name = "Single",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2302)
                         },
                         new
                         {
                             Id = 4,
                             LookupType = 1,
-                            Name = "Married"
+                            Name = "Married",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2305)
                         },
                         new
                         {
                             Id = 5,
                             LookupType = 1,
-                            Name = "Divorced"
+                            Name = "Divorced",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2306)
                         },
                         new
                         {
                             Id = 6,
                             LookupType = 1,
-                            Name = "Widow"
+                            Name = "Widow",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2307)
                         },
                         new
                         {
                             Id = 7,
                             LookupType = 1,
-                            Name = "Widower"
+                            Name = "Widower",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2311)
                         },
                         new
                         {
                             Id = 8,
                             LookupType = 3,
-                            Name = "Administrator"
+                            Name = "Administrator",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2313)
                         },
                         new
                         {
                             Id = 9,
                             LookupType = 3,
-                            Name = "User"
+                            Name = "User",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2314)
                         },
                         new
                         {
                             Id = 10,
                             LookupType = 3,
-                            Name = "CareGiver"
+                            Name = "CareGiver",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2315)
                         },
                         new
                         {
                             Id = 11,
                             LookupType = 4,
-                            Name = "Parent"
+                            Name = "Parent",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2317)
                         },
                         new
                         {
                             Id = 12,
                             LookupType = 4,
-                            Name = "GrandParent"
+                            Name = "GrandParent",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2319)
                         },
                         new
                         {
                             Id = 13,
                             LookupType = 4,
-                            Name = "Spouse"
+                            Name = "Spouse",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2320)
                         },
                         new
                         {
                             Id = 14,
                             LookupType = 4,
-                            Name = "Sibling"
+                            Name = "Sibling",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2322)
                         },
                         new
                         {
                             Id = 15,
                             LookupType = 4,
-                            Name = "Child"
+                            Name = "Child",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2323)
                         },
                         new
                         {
                             Id = 16,
                             LookupType = 4,
-                            Name = "Aunt"
+                            Name = "Aunt",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2325)
                         },
                         new
                         {
                             Id = 17,
                             LookupType = 4,
-                            Name = "Uncle"
+                            Name = "Uncle",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2326)
                         },
                         new
                         {
                             Id = 18,
                             LookupType = 4,
-                            Name = "Cousin"
+                            Name = "Cousin",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2328)
                         },
                         new
                         {
                             Id = 19,
                             LookupType = 4,
-                            Name = "In-law"
+                            Name = "In-law",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2329)
                         },
                         new
                         {
                             Id = 20,
                             LookupType = 4,
-                            Name = "CHV"
+                            Name = "CHV",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2330)
                         },
                         new
                         {
                             Id = 24,
                             LookupType = 2,
-                            Name = "Nairobi"
+                            Name = "Nairobi",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2332)
                         },
                         new
                         {
                             Id = 25,
                             LookupType = 2,
-                            Name = "Kilifi"
+                            Name = "Kilifi",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2333)
                         },
                         new
                         {
                             Id = 26,
                             LookupType = 2,
-                            Name = "Nyamira"
+                            Name = "Nyamira",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2334)
                         },
                         new
                         {
                             Id = 27,
                             LookupType = 2,
-                            Name = "Nakuru"
+                            Name = "Nakuru",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2336)
                         },
                         new
                         {
                             Id = 28,
                             LookupType = 5,
-                            Name = "National"
+                            Name = "National",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2337)
                         },
                         new
                         {
                             Id = 29,
                             LookupType = 5,
-                            Name = "County"
+                            Name = "County",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2339)
                         },
                         new
                         {
                             Id = 30,
                             LookupType = 5,
-                            Name = "Sub-County"
+                            Name = "Sub-County",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2340)
                         },
                         new
                         {
                             Id = 31,
                             LookupType = 6,
-                            Name = "Scheduled"
+                            Name = "Scheduled",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2342)
                         },
                         new
                         {
                             Id = 32,
                             LookupType = 6,
-                            Name = "Attended"
+                            Name = "Attended",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2343)
                         },
                         new
                         {
                             Id = 33,
                             LookupType = 6,
-                            Name = "Missed"
+                            Name = "Missed",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2344)
                         },
                         new
                         {
                             Id = 34,
                             LookupType = 6,
-                            Name = "Attended Else Where"
+                            Name = "Attended Else Where",
+                            UpdatedAt = new DateTime(2021, 1, 12, 13, 23, 16, 659, DateTimeKind.Local).AddTicks(2346)
                         });
                 });
 
@@ -572,103 +654,77 @@ namespace AppointmentScheduler.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("FacilityId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("GenderId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("HudumaNamba")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("MaritalStatusId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("MiddleName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
                     b.ToTable("Persons");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DateOfBirth = new DateTime(1995, 12, 11, 0, 0, 0, 0, DateTimeKind.Local),
-                            FacilityId = 1,
-                            FirstName = "User",
-                            GenderId = 1,
-                            HudumaNamba = "12345671",
-                            LastName = "Doe",
-                            MaritalStatusId = 3,
-                            MiddleName = "1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DateOfBirth = new DateTime(1990, 12, 11, 0, 0, 0, 0, DateTimeKind.Local),
-                            FacilityId = 1,
-                            FirstName = "User",
-                            GenderId = 2,
-                            HudumaNamba = "12345672",
-                            LastName = "Jil",
-                            MaritalStatusId = 3,
-                            MiddleName = "2"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DateOfBirth = new DateTime(1980, 12, 11, 0, 0, 0, 0, DateTimeKind.Local),
-                            FacilityId = 1,
-                            FirstName = "User",
-                            GenderId = 1,
-                            HudumaNamba = "12345673",
-                            LastName = "Don",
-                            MaritalStatusId = 4,
-                            MiddleName = "3"
-                        });
                 });
 
             modelBuilder.Entity("AppointmentScheduler.Core.Entity.PersonContact", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<string>("AlternateNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("CountyId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("PersonId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PhysicalAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PostalAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -681,29 +737,35 @@ namespace AppointmentScheduler.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("PersonId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PhysicalAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("PostalAddress")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("RelationshipId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -715,60 +777,60 @@ namespace AppointmentScheduler.Persistence.Migrations
             modelBuilder.Entity("AppointmentScheduler.Core.Entity.User", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("PersonId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("RoleId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
@@ -777,8 +839,7 @@ namespace AppointmentScheduler.Persistence.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasDatabaseName("UserNameIndex");
 
                     b.HasIndex("PersonId");
 
@@ -788,26 +849,25 @@ namespace AppointmentScheduler.Persistence.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -816,18 +876,18 @@ namespace AppointmentScheduler.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -840,18 +900,18 @@ namespace AppointmentScheduler.Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -863,17 +923,17 @@ namespace AppointmentScheduler.Persistence.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -885,10 +945,10 @@ namespace AppointmentScheduler.Persistence.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -900,16 +960,16 @@ namespace AppointmentScheduler.Persistence.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 

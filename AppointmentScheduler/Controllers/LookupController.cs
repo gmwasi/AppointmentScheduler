@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AppointmentScheduler.Core.Entity;
 using AppointmentScheduler.Core.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -11,6 +12,7 @@ namespace AppointmentScheduler.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class LookupController : ControllerBase
     {
         private readonly ILogger<LookupController> _logger;

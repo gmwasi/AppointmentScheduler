@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using AppointmentScheduler.Core.Entity;
 using AppointmentScheduler.Core.Interface;
 using AppointmentScheduler.Core.Model;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -16,6 +16,7 @@ namespace AppointmentScheduler.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class AppointmentsController : ControllerBase
     {
         private readonly ILogger<AppointmentsController> _logger;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AppointmentScheduler.Core.Entity;
 using AppointmentScheduler.Persistence.Seed;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -22,6 +23,35 @@ namespace AppointmentScheduler.Persistence
         public DbSet<ImmunizationPeriod> ImmunizationPeriods { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Child> Children { get; set; }
+
+        public override int SaveChanges()
+        {
+            AddTimestamps();
+            return base.SaveChanges();
+        }
+
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            AddTimestamps();
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        private void AddTimestamps()
+        {
+            var entities = ChangeTracker.Entries()
+                .Where(x => (x.Entity is Entity) && (x.State == EntityState.Added || x.State == EntityState.Modified));
+
+            foreach (var entity in entities)
+            {
+                var now = DateTime.UtcNow; // current datetime
+
+                if (entity.State == EntityState.Added)
+                {
+                    ((Entity)entity.Entity).CreatedAt = now;
+                }
+                ((Entity)entity.Entity).UpdatedAt = now;
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
