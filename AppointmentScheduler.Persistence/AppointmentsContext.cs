@@ -11,7 +11,7 @@ namespace AppointmentScheduler.Persistence
     {
         public AppointmentsContext(DbContextOptions<AppointmentsContext> options) : base(options)
         {
-
+            this.Database.EnsureCreated();
         }
 
         public DbSet<Person> Persons { get; set; }
