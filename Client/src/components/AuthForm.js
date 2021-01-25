@@ -171,10 +171,10 @@ AuthForm.propTypes = {
 AuthForm.defaultProps = {
   authState: 'LOGIN',
   showLogo: true,
-  usernameLabel: 'Email',
+  usernameLabel: 'Username',
   usernameInputProps: {
-    type: 'email',
-    placeholder: 'your@email.com',
+    type: 'text',
+    placeholder: 'your username',
   },
   passwordLabel: 'Password',
   passwordInputProps: {
