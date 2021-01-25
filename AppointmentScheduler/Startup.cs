@@ -32,14 +32,14 @@ namespace AppointmentScheduler
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string[] clients = new[] { Configuration["JWT:ValidAudience"] };
             // configure CORS
             services.AddCors(options =>
             {
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                     builder =>
                     {
-                        builder.WithOrigins("https://localhost:3001",
-                            "http://localhost:3000")
+                        builder.WithOrigins(clients)
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                     });
@@ -49,12 +49,12 @@ namespace AppointmentScheduler
             services.AddDbContext<AppointmentsContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("defaultConnection")));
 
-            // For Identity  
+            // For Identity
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<AppointmentsContext>()
                 .AddDefaultTokenProviders();
 
-            // Adding Authentication  
+            // Adding Authentication
             services.AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

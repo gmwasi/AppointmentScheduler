@@ -1,2 +1,2 @@
 //Local Server
-export const url =  'https://localhost:5001/api/';
+export const url =  process.env.REACT_APP_URL;
