@@ -55,6 +55,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "https": "set HTTPS=true&&react-scripts start",
     "build": "react-scripts build",
     "serve": "serve -s build",
     "deploy": "gh-pages -d build",

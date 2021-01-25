@@ -5,7 +5,7 @@ import { Card, CardImg, CardImgOverlay, CardTitle, CardText } from 'reactstrap';
 
 import Todos, { propTypes as TodosPropTypes } from 'components/Todos';
 
-import backgroundImage from 'assets/img/bg/background_1920-2.jpg';
+import backgroundImage from 'assets/img/mask.png';
 
 const TodosCard = ({ image, title, subtitle, todos, ...restProps }) => {
   return (
