@@ -55,3 +55,13 @@ export const IMMUNIZATION_ERROR = 'IMMUNIZATION_ERROR'
 export const AUTHENTICATION = 'AUTHENTICATION'
 export const AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR'
 export const UNAUTHORISED_ERROR = 'UNAUTHORISED_ERROR'
+
+/**
+ * @TYPES
+ * ===============================================
+ * Users
+ */
+export const GET_USERS = 'GET_USERS'
+export const GET_USER_BY_ID = 'GET_USER_BY_ID'
+export const REGISTER = 'REGISTER'
+export const USERS_ERROR = 'USERS_ERROR'

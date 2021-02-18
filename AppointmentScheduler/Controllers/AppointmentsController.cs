@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using AppointmentScheduler.Core.Entity;
 using AppointmentScheduler.Core.Interface;
@@ -19,11 +17,12 @@ namespace AppointmentScheduler.Controllers
     [Authorize]
     public class AppointmentsController : ControllerBase
     {
-        private readonly ILogger<AppointmentsController> _logger;
-        private readonly IAppointmentService _appointmentService;
         private readonly IAppointmentRepository _appointmentRepository;
+        private readonly IAppointmentService _appointmentService;
+        private readonly ILogger<AppointmentsController> _logger;
 
-        public AppointmentsController(ILogger<AppointmentsController> logger, IAppointmentService appointmentService, IAppointmentRepository appointmentRepository)
+        public AppointmentsController(ILogger<AppointmentsController> logger, IAppointmentService appointmentService,
+            IAppointmentRepository appointmentRepository)
         {
             _logger = logger;
             _appointmentService = appointmentService;
@@ -57,7 +56,7 @@ namespace AppointmentScheduler.Controllers
         [HttpGet("SCHEDULE/{dateOfBirth}")]
         public IEnumerable<AppointmentView> GetAppointmentScheduleFromDob(string dateOfBirth)
         {
-            DateTime dob = DateTime.ParseExact(dateOfBirth, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+            var dob = DateTime.ParseExact(dateOfBirth, "yyyy-MM-dd", CultureInfo.InvariantCulture);
             return _appointmentService.GetAppointmentScheduleFromDob(dob);
         }
 
@@ -72,7 +71,6 @@ namespace AppointmentScheduler.Controllers
             catch (Exception e)
             {
                 return BadRequest(e);
-
             }
         }
 
@@ -87,7 +85,6 @@ namespace AppointmentScheduler.Controllers
             catch (Exception e)
             {
                 return BadRequest(e);
-
             }
         }
 
@@ -102,7 +99,6 @@ namespace AppointmentScheduler.Controllers
             catch (Exception e)
             {
                 return BadRequest(e);
-
             }
         }
     }

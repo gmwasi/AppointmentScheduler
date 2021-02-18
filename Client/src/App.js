@@ -12,6 +12,8 @@ import './styles/reduction.scss';
 import { PrivateRoute } from "./PrivateRoute"
 
 const DashboardPage = React.lazy(() => import('pages/DashboardPage'));
+const UsersPage = React.lazy(() => import('pages/UsersPage'));
+const AddUserPage = React.lazy(() => import('pages/AddUserPage'));
 const RegisterPage = React.lazy(() => import('pages/RegisterPage'));
 const AppointmentsPage = React.lazy(() => import('pages/AppointmentsPage'));
 const SearchPage = React.lazy(() => import('pages/SearchPage'));
@@ -51,6 +53,8 @@ class App extends React.Component {
               <MainLayout breakpoint={this.props.breakpoint}>
                 <React.Suspense fallback={<PageSpinner />}>
                   <PrivateRoute exact path="/" component={DashboardPage} />
+                  <PrivateRoute exact path="/users" roles={['Administrator']} component={UsersPage} />
+                  <PrivateRoute exact path="/add-user" roles={['Administrator']} component={AddUserPage} />
                   <PrivateRoute exact path="/register" roles={['Administrator', 'User']} component={RegisterPage} />
                   <PrivateRoute exact path="/appointments" roles={['Administrator', 'User']} component={AppointmentsPage} />
                   <PrivateRoute exact path="/search" roles={['Administrator', 'User']} component={SearchPage} />

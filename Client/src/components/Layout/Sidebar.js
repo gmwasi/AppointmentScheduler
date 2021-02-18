@@ -3,11 +3,13 @@ import React from 'react';
 import {
   MdDashboard,
   MdInfo,
+  MdFace,
   MdKeyboardArrowDown,
   MdPersonAdd,
   MdRadioButtonChecked,
   MdSearch,
   MdWeb,
+  MdSettings,
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
@@ -38,12 +40,16 @@ if (authentication.currentRole === 'Administrator' || authentication.currentRole
   ];
 }
 
+const navAdmin = [
+  { to: '/users', name: 'Users', exact: false, Icon: MdFace },
+];
 
 const bem = bn.create('sidebar');
 
 class Sidebar extends React.Component {
   state = {
     isOpenReports: false,
+    isOpenAdmie: false,
   };
 
   handleClick = name => () => {
@@ -106,6 +112,46 @@ class Sidebar extends React.Component {
             </NavItem>)}
             <Collapse isOpen={this.state.isOpenReports}>
               {navComponents.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className="text-uppercase"
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <Icon className={bem.e('nav-item-icon')} />
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+
+            {(authentication.currentRole === 'Administrator') && (<NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Admin')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdSettings className={bem.e('nav-item-icon')} />
+                  <span className=" align-self-start">Admin</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenAdmin
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>)}
+            <Collapse isOpen={this.state.isOpenAdmin}>
+              {navAdmin.map(({ to, name, exact, Icon }, index) => (
                 <NavItem key={index} className={bem.e('nav-item')}>
                   <BSNavLink
                     id={`navItem-${name}-${index}`}

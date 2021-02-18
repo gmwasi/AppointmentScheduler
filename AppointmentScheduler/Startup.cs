@@ -89,6 +89,7 @@ namespace AppointmentScheduler
             services.AddScoped<IImmunizationRepository, ImmunizationRepository>();
             services.AddScoped<ILookupRepository, LookupRepository>();
             services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IChildRepository, ChildRepository>();
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IChildService, ChildService>();
